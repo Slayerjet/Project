@@ -1,20 +1,11 @@
 <?php
-$title = 'VGHS - Upload image';
+$title = 'VGHS - Add a Review';
+
 include('header.php');
 
-if (!isset($_SESSION['username'])) {
-    header('location: signIn.php');
-}
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION['username']);
-    header("location: signIn.php");
-}
 
 $title = 'VGHS - Upload image';
 require_once('dbconfig.php');
-
-
 
 ?>
     <br>
@@ -22,7 +13,7 @@ require_once('dbconfig.php');
     <br>
     <br>
     <div class="container">
-        <form action="addReviewAction.php" method="post" enctype="multipart/form-data">
+        <form action="addReviewAction.php" method="post" enctype="multipart/form-data" id="form1">
             <h1>Add Review</h1>
             <div class="form-group">
             <div>
@@ -73,11 +64,11 @@ require_once('dbconfig.php');
             
             
             
-
-            <div>
-                <label for="review_review">Review</label>
-                <textarea type="text" name="review_review" style="height: 200px;" class="form-control"></textarea>
+            <label for="review_review">Review</label>
+            <div id="editor-container">
             </div>
+
+<!--                <textarea type="text" name="review_review" style="height: 200px;" class="form-control"></textarea>-->
             <div>
                 <label for="review_rating">Rating</label>
                 <select name="review_rating" class="form-control">
@@ -90,6 +81,29 @@ require_once('dbconfig.php');
                 </select>
             </div> <br>
             <button type="submit" name="submit" class="btn btn-success">Upload</button>
+            
+            <input type="hidden" name="review_review" id="review_review">
         </form>
     </div>
+    <script>
+var quill = new Quill('#editor-container', {
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      ['image', 'code-block']
+    ]
+  },
+  placeholder: 'Write your review here..',
+  theme: 'snow'  // or 'bubble'
+});
+
+document.getElementById('form1').addEventListener('submit',function(e){
+document.getElementById('review_review').value = quill.container.firstChild.innerHTML; 
+  document.getElementById('form1').submit();
+});
+
+</script>
+
+    
 <?php include('footer.php');

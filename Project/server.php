@@ -26,9 +26,11 @@ if (isset($_POST['reg_user'])) {
 
   // form validation: ensure that the form is correctly filled ...
   // by adding (array_push()) corresponding error unto $errors array
-  if (empty($username)) { array_push($_SESSION['$errors'], "*Username is required"); }
-  if (empty($email)) { array_push($_SESSION['$errors'], "*Email is required"); }
-  if (empty($password)) { array_push($_SESSION['$errors'], "*Password is required"); }
+  if (empty($username)) { array_push($_SESSION['$errors']); }
+  if (empty($email)) { array_push($_SESSION['$errors']); }
+  if (empty($password)) { array_push($_SESSION['$errors']); }
+
+    
 
   // first check the database to make sure 
   // a user does not already exist with the same username and/or email
@@ -36,18 +38,34 @@ if (isset($_POST['reg_user'])) {
   $result = mysqli_query($conn, $user_check_query);
   $user = mysqli_fetch_assoc($result);
   
+    $urlParams = "?";
   if ($user) { // if user exists
-    if ($user['username'] === $username) {
-      array_push($_SESSION['$errors'], "*Username already exists");
+    if (strtoupper ($user['username']) === strtoupper ($username)) {
+//      header('location: register.php?userExists=true');
+        $urlParams .= "userExists=true&";        
     }
 
-    if ($user['email'] === $email) {
-      array_push($_SESSION['$errors'], "*Email already exists");
+    
+  }
+    
+    $user_check_query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
+  $result = mysqli_query($conn, $user_check_query);
+  $user = mysqli_fetch_assoc($result);
+  
+  if ($user) { // if user exists
+    
+    if (strtoupper ($user['email']) === strtoupper ($email)) {
+//      header('location: register.php?emailExists=true');
+        $urlParams .= "emailExists=true&";
     }
   }
 
+    if ($urlParams!="?"){
+        header('location: register.php' . $urlParams);
+//        echo $urlParams;
+    } else {
   // Finally, register user if there are no errors in the form
-  if (count($_SESSION['$errors']) == 0) {
+//  if (count($_SESSION['$errors']) == 0) {
 //  	$password = md5($password);//encrypt the password before saving in the database
 
   	$query = "INSERT INTO users (username, email, role, date_reg, password, user_memo, user_name) 
@@ -55,9 +73,7 @@ if (isset($_POST['reg_user'])) {
   	mysqli_query($conn, $query);
   	
       header('location: signIn.php');
-  } else {
-      header('location: register.php');
-  }
+}
 }
 
 
@@ -70,10 +86,10 @@ if (isset($_POST['login_user'])) {
 
 
   if (empty($username)) {
-  	array_push($_SESSION['$errors'], "*Username is required");
+  	array_push($_SESSION['$errors']);
   }
   if (empty($password)) {
-  	array_push($_SESSION['$errors'], "*Password is required");
+  	array_push($_SESSION['$errors']);
   }
 
   if (count($_SESSION['$errors']) == 0) {

@@ -1,16 +1,16 @@
 <?php
 
 //set the title for the page
-$title = 'VGHS - Games';
-include 'header.php';
+$title = 'VGHS - ______';
+include('header.php');
 ?>
                     
 
     <br>
     <br>
-    <aside>
-        <article class="mainPage">
-            <h3>Games</h3>
+    <div>
+        <div class="mainPage">
+            <h3>______</h3>
             <br>
             <br>
             <br>
@@ -37,9 +37,9 @@ include 'header.php';
             <br>
             <br>
             
-        </article>
-    </aside>
+        </div>
+    </div>
     
 <?php
-    include 'footer.php';
+    include('footer.php');
 ?>

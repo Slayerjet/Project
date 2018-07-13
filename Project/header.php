@@ -1,4 +1,23 @@
-<?php session_start(); ?>
+<?php session_start(); 
+
+
+if(!isset($_SESSION['username']) && basename($_SERVER['PHP_SELF']) == 'addReview.php') {
+    header('location: signIn.php?addReview=false');
+}
+if(!isset($_SESSION['username']) && basename($_SERVER['PHP_SELF']) == 'addConsole.php') {
+    header('location: signIn.php?addConsole=false');
+}
+if(!isset($_SESSION['username']) && basename($_SERVER['PHP_SELF']) == 'addGame.php') {
+    header('location: signIn.php?addGame=false');
+}
+if(!isset($_SESSION['username']) && basename($_SERVER['PHP_SELF']) == 'updateConsole.php') {
+    header('location: signIn.php?addConsole=false');
+}
+if(!isset($_SESSION['username']) && basename($_SERVER['PHP_SELF']) == 'updateGames.php') {
+    header('location: signIn.php?addGame=false');
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <!--VGHS-->
@@ -18,6 +37,8 @@
     <script src="/project/project/addOns/popper.min.js"></script>
     <script src="/project/project/addOns/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="addOns/quill/quill.min.js"></script>
+    <link rel="stylesheet" href="addOns/quill/quill.snow.css">
 
 </head>
 
@@ -49,7 +70,7 @@ while($row = $result->fetch_array()){
     
     echo '<li class="nav-item">' . '<a class="nav-link" href="/project/project/consoles.php">'.'Consoles'.'</a></li>';
     
-    echo '<li class="nav-item dropdown">' . '<a class="nav-link dropdown" href="#" id="navbardrop" data-toggle="dropdown">Search</a>' . '<div class="dropdown-menu">'.'<input class="dropdown-item" type="text" name="search" placeholder="Search...">'.'</div></li>';
+//    echo '<li class="nav-item dropdown">' . '<a class="nav-link dropdown" href="#" id="navbardrop" data-toggle="dropdown">Search</a>' . '<div class="dropdown-menu">'.'<input class="dropdown-item" type="text" name="search" placeholder="Search...">'.'</div></li>';
     
     if(isset($_SESSION['username'])) {
     if($_SESSION['username'] == 'slayerjet') {

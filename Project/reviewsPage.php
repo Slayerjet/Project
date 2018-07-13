@@ -63,10 +63,6 @@ while($row = $result->fetch_array()){
                 <tr>
                     <td><?php echo $review_review ?></td>
                 </tr>
-                <tr align="center">
-                    <td> <?php if($review_by == $_SESSION['username']){echo '<button href="updateReview.php?review_id='.$row['review_id'].'" class="btn btn-success"> Edit Review </button>';} ?> </td>
-                </tr>
-            </table>
             </table>
             <br>
         </div>

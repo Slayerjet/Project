@@ -12,6 +12,19 @@ $title = 'VGHS - Sign in';
         <form method="post" action="server.php">
             <div style="color: red;">
            <?php 
+           if(isset($_GET['addReview'])){
+               echo "*You need to login before writing a review";
+               echo '<br>';
+           }  
+            if(isset($_GET['addGame'])){
+               echo "*You need to login before adding a game";
+               echo '<br>';
+           } 
+            if(isset($_GET['addConsole'])){
+               echo "*You need to login before adding a console";
+               echo '<br>';
+           } 
+            
             if(isset($_SESSION['$errors'])){
             if(count($_SESSION['$errors']) > 0){
                 echo "*Username or Password is missing or incorrect";
@@ -35,45 +48,13 @@ $title = 'VGHS - Sign in';
                 <div class="input-group">
                     <button type="submit" class="btn btn-success" name="login_user">Login</button>
                 </div>
+                <br>
+                <div>
+                    Dont have an account? <a href="register.php">Register now!</a>
+                </div>
             </div>
         </form>
-
-        <script>
-            //                   $(document).ready(function() {
-            //                       e.pre
-            //                       $('form').submit(function(e) {
-            //                           signInViaAJAX();
-            //                       }) //End of submit.function
-            //                   }); //End of document.ready
-            //           
-            //                   function signInViaAJAX() {
-            //                       var dataObj = {
-            //                           username: $('#username').val(),
-            //                           password: $('#password').val()
-            //                       } //End of dataObj
-            //                       //Now try to sign in with an AJAX request to the server
-            //                       $.ajax({
-            //                           url: 'checkCred.php',
-            //                           type: 'post',
-            //                           dataType: 'json',
-            //                           data: dataObj,
-            //                           success: function(data) {
-            //                               console.log(data);
-            //                               if (data.length > 0) {
-            //                                   sessionStorage.setItem('role', data[0].role);
-            //                                   window.location = "index.php"
-            //                               } else {
-            //                                   alert('Username or Password Incorrect - Try again');
-            //                               }
-            //                           },
-            //                           error: function(x, m, s) {
-            //                               console.log(m)
-            //                           }
-            //                       }); //End of ajax
-            //                   } //End of signInViaAJAX
-
-        </script>
-
-        <?php
+</div>
+<?php
     include('footer.php');
 ?>
